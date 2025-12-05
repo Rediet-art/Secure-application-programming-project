@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register - Vulnerable</title>
+</head>
+<body>
+    <h2>Create Account</h2>
+
+    <form onsubmit="registerUser(event)">
+        <label>Name:</label><br>
+        <input id="name"><br><br>
+
+        <label>Email:</label><br>
+        <input id="email"><br><br>
+
+        <label>Password:</label><br>
+        <input id="password"><br><br>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <p id="result"></p>
+
+    <script>
+        function registerUser(event) {
+            event.preventDefault();
+
+            fetch("http://localhost:3000/api/register", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    name: document.getElementById("name").value,
+                    email: document.getElementById("email").value,
+                    password: document.getElementById("password").value
+                })
+            })
+            .then(res => res.text())
+            .then(data => document.getElementById("result").innerHTML = data);
+        }
+    </script>
+
+</body>
+</html>

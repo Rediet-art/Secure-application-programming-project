@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XSS Demo</title>
+</head>
+<body>
+    <h2>XSS Playground</h2>
+
+    <form method="GET">
+        <input name="msg" placeholder="Type something">
+        <button type="submit">Submit</button>
+    </form>
+
+    <h3>Output:</h3>
+    <div id="output"></div>
+
+    <script>
+        // Reflected/DOM XSS vulnerable
+        const params = new URLSearchParams(window.location.search);
+        const msg = params.get("msg");
+
+        if (msg) {
+            document.getElementById("output").innerHTML = msg;
+        }
+    </script>
+
+</body>
+</html>

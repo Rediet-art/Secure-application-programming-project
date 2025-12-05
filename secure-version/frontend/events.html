@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Events - Secure</title></head>
+<body>
+  <h2>Events</h2>
+  <div id="events"></div>
+
+  <script>
+    async function fetchEvents() {
+      const res = await fetch('http://localhost:4000/events', { credentials: 'include' });
+      const events = await res.json();
+      const container = document.getElementById('events');
+      container.innerHTML = '';
+      events.forEach(ev => {
+        // create elements safely (avoid innerHTML for user content)
+        const card = document.createElement('div');
+        const h3 = document.createElement('h3'); h3.textContent = ev.title;
+        const p = document.createElement('p'); p.textContent = ev.description;
+        card.appendChild(h3); card.appendChild(p);
+        container.appendChild(card);
+      });
+    }
+    fetchEvents();
+  </script>
+</body>
+</html>

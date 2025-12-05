@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - Vulnerable</title>
+</head>
+<body>
+    <h2>Login (SQL Injection Vulnerable)</h2>
+
+    <form onsubmit="login(event)">
+        <label>Email:</label><br>
+        <input id="email"><br><br>
+
+        <label>Password:</label><br>
+        <input id="password"><br><br>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <p id="result"></p>
+
+    <script>
+        function login(event) {
+            event.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            fetch(`http://localhost:3000/api/login?email=${email}&password=${password}`)
+                .then(res => res.text())
+                .then(data => {
+                    document.getElementById("result").innerHTML = data;
+                });
+        }
+    </script>
+
+</body>
+</html>

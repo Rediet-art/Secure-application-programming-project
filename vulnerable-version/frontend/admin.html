@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin</title>
+    <script src="js/api.js"></script>
+    <script>
+        async function createEvent() {
+            const title = document.getElementById("title").value;
+            const description = document.getElementById("description").value;
+
+            await apiPost("/create-event", { title, description });
+            alert("Event created");
+        }
+    </script>
+</head>
+<body>
+    <h1>Admin – Create Event</h1>
+    <input id="title" placeholder="Title"><br>
+    <textarea id="description"></textarea><br>
+    <button onclick="createEvent()">Create Event</button>
+</body>
+</html>

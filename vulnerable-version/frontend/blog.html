@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blog</title>
+    <script src="js/api.js"></script>
+    <script>
+        async function loadPosts() {
+            const posts = await apiGet("/blog");
+
+            let html = "";
+
+            posts.forEach(p => {
+                // Vulnerable: no sanitization
+                html += `<p>${p.content}</p><hr>`;
+            });
+
+            document.getElementById("blog").innerHTML = html;
+        }
+
+        async function submitPost() {
+            const content = document.getElementById("post").value;
+
+            await apiPost("/blog", { content });
+            loadPosts();
+        }
+
+        window.onload = loadPosts;
+    </script>
+</head>
+<body>
+    <h1>Blog</h1>
+    <textarea id="post"></textarea>
+    <button onclick="submitPost()">Submit</button>
+    <div id="blog"></div>
+</body>
+</html>

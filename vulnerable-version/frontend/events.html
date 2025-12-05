@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Events (Vulnerable)</title>
+</head>
+<body>
+    <h2>Event List (Stored XSS Vulnerable)</h2>
+
+    <div id="events"></div>
+
+    <script>
+        fetch("http://localhost:3000/api/events")
+            .then(res => res.json())
+            .then(events => {
+                let html = "";
+
+                events.forEach(ev => {
+                    // intentionally NOT escaping HTML → stored XSS
+                    html += `
+                        <div>
+                            <h3>${ev.title}</h3>
+                            <p>${ev.description}</p>
+                            <a href="register-event.html?id=${ev.id}">Register</a>
+                            <hr>
+                        </div>
+                    `;
+                });
+
+                document.getElementById("events").innerHTML = html;
+            });
+    </script>
+
+</body>
+</html>
+
